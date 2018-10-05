@@ -79,7 +79,7 @@ $(function() {
             expect(body.classList.contains('menu-hidden')).toBe(false)
 
             $('.menu-icon-link').trigger('click');
-            expect(body.classList.contains('menu-hidden')).toBe(false)
+            expect(body.classList.contains('menu-hidden')).toBe(true)
           })
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
@@ -88,18 +88,24 @@ $(function() {
           */
         })
     /* TODO: Write a new test suite named "Initial Entries" */
+      describe('Initial Entries', function() {
 
+        beforeEach(function(done) {
+          $('.feed').html("")
+          // done is optional callback for loadFeed, required in this case to stop the 'it' block from running before the asynchronous AJAX call is complete
+          loadFeed(0, done)
+        })
         /* TODO: Write a test that ensures when the loadFeed
          * function is called and completes its work, there is at least
          * a single .entry element within the .feed container.
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-
-    /* TODO: Write a new test suite named "New Feed Selection" */
-
-        /* TODO: Write a test that ensures when a new feed is loaded
-         * by the loadFeed function that the content actually changes.
-         * Remember, loadFeed() is asynchronous.
-         */
+         it('should contain at least one entry once loadFeed() has finished execution', function(done) {
+           expect($('.feed').children().length).not.toBe(0);
+           // without invoking done() here, Jasmine complains: Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.
+           // Cf. docs: https://jasmine.github.io/2.3/introduction.html#section-Asynchronous_Support
+           done();
+         });
+     });
 }());
